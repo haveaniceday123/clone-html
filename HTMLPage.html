@@ -1,89 +1,109 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-  <title>Chapter_5</title>
-  <link href="https://fonts.googleapis.com/css?family=Oswald&display=swap" rel="stylesheet" type="text/css" />
-  <!-- 초기화 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimun-scale=1.0, maximum-scale=1.0 user-scalable=no">
+  <title>Document</title>
+  <!-- initialize  -->
   <style>
-    * { margin: 0; padding: 0 }
-    body { font-family: sans-serif; }
+    * { padding: 0; margin: 0;}
     li { list-style: none; }
     a { text-decoration: none; }
-    img { border: 0; }
+    body { font-family: Helvetica, sans-serif; }
   </style>
-  <!-- 헤더 -->
+  <!-- header -->
   <style>
-    #main_header {
-      width: 960px; height: 160px;
-      margin: 0 auto;
+    /* sprite image */
+
+   #main_header {
+      background-image: url('header_background.png');
+      height: 45px;
 
       position: relative;
+      line-height: 45px;
+      text-align: center;
     }
 
-    #main_header > #title {
+    #main_header > h1 {
+      color: white;
+    }
+  
+    #main_header > a, #main_header > label {
+      display: block;
       position: absolute;
-      left: 20px;
-      top: 30px;
+      height: 32px;
     }
 
-    #main_header > #main_gnb {
-      position: absolute;
-      right: 0;
-      top: 0;
+    #main_header > a.left {
+      top: 7px; left: 5px;
+      width: 62px;
     }
 
-    #main_header > #main_lnb {
-      position: absolute;
-      right: 0; 
-      bottom: 10px;
+    #main_header > label.right {
+      top: 7px; right: 5px;
+      width: 32px;
     }
+
   </style>
-  <!-- 타이틀 -->
+  <!-- sprite image -->
   <style>
-    #title {
-      font-family: 'Oswald', sans-serif;
+    #main_header > a.left {
+      background: url('header_left_button.png');
+      background-position: 62px 32px;
+      text-indent: -99999px;
+    }
+
+    #main_header > label.right {
+      background: url('header_right_button.png');
+      background-position: 0 -32px;
+      text-indent: 99999px;
     }
   </style>
-  <!-- 메뉴(1) -->
-  <style></style>
-  <!-- 메뉴(2) -->
-  <style></style>
-  <!-- 컨텐츠 -->
-  <style></style>
-  <!-- 본문 -->
-  <style></style>
-  <!-- 사이드 -->
-  <style></style>
-  <!-- 목록 -->
-  <style></style>
-  <!-- 푸터 -->
-  <style></style>
+  <!-- toggle -->
+  <style>
+    #toggle { display: none; }
+    #main_gnb_wrap { display: none; }
+    #toggle:checked + #wrap > #main_gnb_wrap { display: block; }
+    #main_gnb_wrap {
+      background: #363636;
+      padding: 15px;
+    }
+    #main_gnb {
+      background: #FFFFFF;
+      padding: 5px;
+     }
 
+     #main_gnb > ul {
+       overflow: hidden;
+     }
+
+     #main_gnb > ul > li {
+       width: 80px;
+       float: left;
+     }
+  </style>
 </head>
 <body>
-  <header id="main_header">
-    <div id="title">
-      <h1>Rint Development</h1>
-      <h2>HTML5 + CSS3 Basic</h2>
+  <input id="toggle" type="checkbox">
+  <div id="wrap">
+    <header id="main_header">
+      <a class="left" href="#">Main</a>
+      <h1>Mobile</h1>
+      <label for="toggle" class="right">Toggle</label>
+    </header>
+    <div id="main_gnb_wrap">
+      <div id="main_gnb">
+        <ul>
+          <li><a href>버튼</a></li>
+          <li><a href>버튼</a></li>
+          <li><a href>버튼</a></li>
+          <li><a href>버튼</a></li>
+          <li><a href>버튼</a></li>
+          <li><a href>버튼</a></li>
+          <li><a href>버튼</a></li>
+          <li><a href>버튼</a></li>
+        </ul>
+      </div>
     </div>
-    <nav id="main_gnb">
-      <ul>
-        <li><a href="#">Web</a></li>
-        <li><a href="#">Mobile</a></li>
-        <li><a href="#">Game</a></li>
-        <li><a href="#">Simulation</a></li>
-        <li><a href="#">Data</a></li>
-      </ul>
-    </nav>
-    <nav id="main_lnb">
-      <ul>
-        <li><a href="#">HTML5</a></li>
-        <li><a href="#">CSS5</a></li>
-        <li><a href="#">JavaScript</a></li>
-        <li><a href="#">jQuery</a></li>
-        <li><a href="#">Node.js</a></li>
-      </ul>
-    </nav>
-  </header>
+  </div>
 </body>
 </html>

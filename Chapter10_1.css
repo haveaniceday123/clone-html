@@ -1,0 +1,99 @@
+/* initialize */
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  width: 980px;
+  margin: 100px auto;
+}
+
+/* box */
+.box {
+  width: 200px;
+  height: 200px;
+  background-color: orange;
+  transition-duration: 5s;
+}
+
+.box:hover {
+  width: 400px;
+  height: 400px;
+}
+
+.box:active {
+  background-color: red;
+}
+
+/* graph */
+#graph {
+  width: 610px;
+  border: 3px solid black;
+}
+
+#graph > div.bar {
+  width: 10px;
+  height: 40px;
+  margin: 5px;
+  background-color: orange;
+  transition-property: width, background-color;
+  transition-duration: 2s, 20s;
+}
+
+#graph:hover > div.bar {
+  width: 600px
+}
+
+/* #graph:hover > div.bar:nth-child(1) {
+  transition-delay: 0s;
+}
+#graph:hover > div.bar:nth-child(2) {
+  transition-delay: 1s;
+}
+#graph:hover > div.bar:nth-child(3) {
+  transition-delay: 2s;
+}
+#graph:hover > div.bar:nth-child(4) {
+  transition-delay: 3s;
+}
+#graph:hover > div.bar:nth-child(5) {
+  transition-delay: 4s;
+} */
+
+/* #graph:hover > div.bar:nth-child(1) {
+  transition-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+#graph:hover > div.bar:nth-child(2) {
+  transition-timing-function: ease;
+}
+#graph:hover > div.bar:nth-child(3) {
+  transition-timing-function: ease-in;
+}
+#graph:hover > div.bar:nth-child(4) {
+  transition-timing-function: ease-in-out;
+}
+#graph:hover > div.bar:nth-child(5) {
+  transition-timing-function: ease-out;
+} */
+
+#graph:hover > div.bar:nth-child(1) {
+  width: 100px;
+  background-color: red;
+}
+#graph:hover > div.bar:nth-child(2) {
+  width: 200px;
+  background-color: yellow;
+}
+#graph:hover > div.bar:nth-child(3) {
+  width: 300px;
+  background-color: green;
+}
+#graph:hover > div.bar:nth-child(4) {
+  width: 400px;
+  background-color: blue;
+}
+#graph:hover > div.bar:nth-child(5) {
+  width: 500px;
+  background-color: pink;
+}

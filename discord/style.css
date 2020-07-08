@@ -1,0 +1,192 @@
+@charset "utf-8";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+
+/* CSS Reset */
+body {
+  background-color: #26262b;
+}
+
+body, ul, li, h2,  p {
+  margin: 0;
+  padding: 0;;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+li {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+
+/* CSS Design Area */
+.wrapper {
+  width: 1080px;
+  margin: 0 auto;
+}
+
+
+.header {
+  overflow: hidden;
+}
+
+.logo {
+  display: block;
+  background-color: red;
+  height: 60px;
+  float: left;
+}
+
+.header-nav {
+  float: left;
+}
+
+.header-nav > li {
+  float: left;
+  padding: 18px 10px;
+  font-size: 0.8em;
+  color: white;
+}
+
+.right-nav {
+  float: right;
+}
+
+.right-nav-li {
+  float: left;
+  padding: 18px 5px;
+  font-size: 0.8em;
+  color: white;
+}
+
+.devider { 
+  position: relative; 
+  margin-left: 10px;
+  padding-left: 15px !important;
+}
+
+.devider::before {
+  display: block;
+  content: '';
+  position: absolute;
+  top: 18px;
+  bottom: 28px;
+  left: 0;
+  border-left: 1px solid white;
+}
+
+.login-li {
+  padding-top: 14px;
+}
+
+.login {
+  display: block;
+  border: 2px solid white;
+  border-radius: 20px;
+  padding: 5px 15px;
+}
+
+.title {
+  text-align: center;
+}
+
+.main-title {
+  color: white;
+}
+
+.title > p {
+  color: gray;
+}
+
+.button-wrapper {
+  overflow: hidden;
+  padding: 17px 180px;
+}
+
+.button {
+  display: block;
+  float: left;
+  width: 230px;
+  padding: 13px 30px;
+  margin-left: 65px;
+  text-align: center;
+  border-radius: 5px;
+  font-size: 0.9em;
+}
+
+.button.white {
+  background-color: white;
+}
+
+.button.blue {
+  background-color: #7289da;
+  color: white;
+}
+
+.main-image {
+  width: 100%;
+  margin-top: 30px;
+}
+
+.footer-ul {
+  float: left;
+  width: 180px;
+  color: gray;
+  font-size: 0.9em;
+}
+
+.footer-ul > li:first-child {
+  margin-bottom: 18px;
+  font-size: 1.1em;
+  color: white;
+}
+
+.ul-wrapper {
+  overflow: hidden;  
+  margin-bottom: 34px;
+}
+
+.last {
+  overflow: hidden;
+  margin: 30px 0;
+  color: white;
+}
+
+.left-box {
+  float: left;
+  width: 900px;
+}
+
+.left-box p {
+  color: gray;
+  font-size: 0.9em;
+}
+
+.right-box {
+  background-color: #7289da;
+  float: right;
+  display: block;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+/* common design */
+.triangle { 
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 4px;
+}
+
+.triangle.down {
+  border-color: white transparent transparent transparent;
+  margin-left: 5px;
+}
+
+.clear {
+  clear: both;
+}

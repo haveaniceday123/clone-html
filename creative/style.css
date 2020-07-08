@@ -1,0 +1,241 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Sriracha&display=swap');
+
+/* CSS Reset */
+h1, p {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color: #dbd0ba;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* CSS Design Area */
+.first-div {
+  width: 1080px;
+  height:650px;
+  margin: 100px auto 10px;
+  background-color: #e5e1d6;
+  padding: 60px 173px 30px;
+  box-sizing: border-box;
+  box-shadow: 5px 5px 5px rgba(10, 10, 10, 0.4);
+}
+
+.about {
+  width: 400px;
+  height: 70px;
+  background-color: #b3470e;
+  text-align: center;
+  line-height: 70px;
+  color: white;
+  font-size: 1.5em;
+  letter-spacing: 12px;
+  position: relative;
+  z-index: 2;
+  margin-bottom: -20px;
+  opacity: 0.8;
+}
+
+.column-wrapper {
+  overflow: hidden;
+  height: 401px;
+  white-space: nowrap;
+  position: relative;
+}
+
+.company-desc {
+  float: left;
+  width: 209px;
+  height: 400px;
+  background-color: transparent;
+}
+
+.first-box-image {
+  float: left;
+  height: 400px;
+  width: 449px;
+  background-image: url(images/autumn.jpg);
+  background-size: 100% 100%;
+}
+
+.title {
+  height: 100px;
+  width: 250px;
+  float: left;
+}
+
+.company-desc {
+  padding: 30px 10px;
+  box-sizing: border-box;
+  font-family: 'Sriracha', cursive;
+}
+
+.title {
+  position: absolute;
+  transform: rotate(-90deg);
+  width: fit-content;
+  box-sizing: border-box;
+  padding: 20px 10px;
+  height: fit-content;
+  color: #e46f1c;
+  font-weight: bold;
+  letter-spacing: 5px;
+  right: -88px;
+  bottom: 100px;
+}
+
+/* second-div */
+.second-div {
+  width: 1080px;
+  height:650px;
+  margin: 40px auto 10px;
+  background-color: #deaa85;
+  padding: 60px 141px 30px;
+  box-sizing: border-box;
+  box-shadow: 5px 5px 5px rgba(10, 10, 10, 0.4);
+  overflow: hidden;
+}
+
+.left-div {
+  width: 500px;
+  height: 500px;
+  padding: 30px;
+  box-sizing: border-box;
+  float: left;
+}
+
+
+.left-div > h1 {
+  text-align: right;
+  line-height: 40px;
+  letter-spacing: 5px;
+  color: #fdfaf9;
+  height: 220px;
+}
+
+.line {
+  border-top: 5px solid #d88f68;
+  width: 150px;
+}
+
+.second-box-text {
+  text-align: justify;
+  font-size: 13px;
+  padding-left: 80px;
+  margin-top: 50px;
+  color: white;
+}
+
+.right-div {
+  float: left;
+  margin-left: 10px;
+  width: 286px;
+  height: 500px;
+  background-color: white;
+  position: relative;
+}
+
+.img {
+  width: 250px;
+  display: block;
+  height: 300px;
+  margin: 20px auto;
+}
+
+.right-div-text {
+  text-align: center;
+  font-size: 20px;
+  font-family: 'Arial Black';
+  margin-top: 60px;
+}
+
+.deco-div {
+  position: absolute;
+  width: 180px;
+  height: 60px;
+  background-color: #b44e1e;
+  opacity: 0.8;
+  top: -25px;
+  left: 50px;
+}
+
+/* third-div */
+.third-div {
+  width: 1080px;
+  height:650px;
+  margin: 40px auto 30px;
+  background-color: #e5e1d6;
+  padding: 60px 141px 30px;
+  box-sizing: border-box;
+  box-shadow: 5px 5px 5px rgba(10, 10, 10, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+
+.third-div-title {
+  position: absolute;
+  width: 200px;
+  letter-spacing: 15px;
+  height: 200px;
+  z-index: 2;
+  line-height: 50px;
+  left: 126px;
+  font-size: 32px;
+  text-align: right;
+}
+
+.third-div-image {
+  position: absolute;
+  width: 400px;
+  height: 300px;
+  z-index: 1;
+  top: 120px;
+  left: 261px;
+}
+
+.third-div-text {
+  width: 500px;
+  right: 112px;
+  top: 213px;
+  height: 800px;
+  position: absolute;
+  background-color: white;
+  color: #b44e1e;
+  font-weight: bold;
+}
+
+
+.inner-text {
+  margin: 50px auto;
+  padding-left: 90px;
+  width: 120px;
+  font-family: 'Sriracha', cursive;
+  line-height: 18px;
+}
+
+.third-text {
+  font-size: 13px;
+  padding: 20px 50px;
+  text-align: justify;
+  color: black;
+}
+
+/* enter */
+.enter {
+  display: block;
+}
+
+.line-hieghts {
+  line-height: 20px;
+}
+
+.third-line {
+  position: absolute;
+  left: 0;
+  border-top: 7px solid #d88f68;
+  width: 380px;
+  bottom: 120px;
+}

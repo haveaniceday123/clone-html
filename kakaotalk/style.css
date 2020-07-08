@@ -1,0 +1,245 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
+/* CSS Reset */
+body, div, ul, li {
+  padding: 0;
+  margin: 0;
+}
+
+ul {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+body {
+  font-family: 'Jua', sans-serif;
+  color: #5c5c5c;
+}
+
+/* CSS Design Area */
+
+/* header */
+.header-wrapper {
+  border-bottom: 1px solid gray;
+  position: fixed;
+  left: 0;
+  right: 0;
+  background-color: white;
+  height: 55px;
+  z-index: 1;
+}
+
+.header {
+  width: 1080px;
+  margin: 0 auto;
+  text-align: center;
+  margin-bottom: -3px;
+}
+
+.kakao-logo {
+  float: left;
+}
+
+.language-menu {
+  float: right;
+  margin-top: 14px;
+}
+
+.language-menu > li {
+  float: left;
+  padding: 0 8px;
+}
+
+.main-menu {  display: inline-block; }
+
+.main-menu > li {  float: left; }
+
+.main-menu > li > a {
+  display: block;
+  padding: 16px 15px 10px;
+  height: 27.5px;
+}
+
+.current-menu {  
+  position: relative; 
+  color: black;
+}
+
+.line {
+  position: absolute;
+  left: 9px;
+  right:9px;
+  bottom: -2px;
+  height: 3px;
+  background-color: black;
+}
+
+.header-added-wrapper {
+  background-color: white;
+}
+
+.header-added {
+  width: 1080px;
+  margin: 0 auto;
+  font-size: 13px;
+  height: 40px;
+  overflow: hidden;
+}
+
+.menu-tree > li {
+  float: left;
+}
+
+.menu-tree > li > a {
+  display: inline-block;
+  line-height: 21px;
+  padding: 0px 5px;
+}
+
+.right-menu-tree {
+  float: right;
+  margin-top: 10px;
+}
+
+.right-menu-tree > li {
+  padding: 0px 13px;
+  float: left;
+  line-height: 21px;
+  position: relative;
+}
+
+.right-menu-tree > li > a {
+  display: inline-block;
+}
+
+.right-menu-tree > li:first-child {
+  color: black;
+  font-weight: bold;
+}
+
+.right-menu-tree > li:first-child > a::after {
+  display: block;
+  content: '';
+  position: absolute;
+  width: 1px;
+  top: 4px;
+  right: 0;
+  border-right: 1px solid gray;
+  bottom: 4px;
+}
+
+/* contents */
+.image-wrapper{
+  background-image: url(images/4320x1080.png);
+  background-size: 100% 100%;
+  height: 400px;
+
+}
+
+.contents {
+  padding-top: 98.5px;  
+}
+
+.image-info {
+  width: 1080px;
+  margin: 0 auto;
+  padding: 60px 0;
+}
+
+.image-info > img {
+  width: 160px;
+}
+
+.image-info > p {
+  color: white;
+  font-size: 31px;
+  line-height: 52px;
+  text-shadow: 1.5px 1.5px black;
+}
+
+.devide-wrapper {
+  width: 1080px;
+  margin: 60px auto 0px;
+  overflow: hidden;
+}
+
+.left-aside {
+  float: left;
+  width: 310px;
+  height: 1000px;
+
+}
+
+.right-section {
+  float: left;
+  width: 770px;
+  padding: 0px 20px;
+  box-sizing: border-box;
+}
+
+.contents-menu {
+  padding: 10px;
+  position: sticky;
+  top: 0;
+}
+
+.contents-menu >  li > a {
+  font-size: 20px;
+  display: block;
+  padding: 5px 0;
+  position: relative;
+}
+
+.current-left-menu {
+  font-weight: 500;
+  color: black;
+}
+
+.contents-menu >  li:first-child > a::after {
+  position: absolute;
+  content: '';
+  display: block;
+  bottom: 5px;
+  left: 0;
+  right: 58%;
+  border-bottom: 1px solid black;
+}
+
+.right-section > h2 {
+  font-size: 20px;
+}
+
+.right-section > img {
+  width: 100%;
+  margin: 0px 0 20px;
+}
+
+.right-section > p {
+  font-size: 14px;
+  margin-bottom: 50px;
+}
+
+
+/* CSS for text */
+.gray {
+  color: gray;
+}
+
+.menu-tree {
+  float: left;
+  margin-top: 10px;
+}
+
+.right-arrow {
+  width: 11px;
+  margin-left: 5px;
+}
+
+.next-arrow {
+  width: 11px;
+}

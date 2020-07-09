@@ -249,16 +249,16 @@ body {
 
 .button-group > a {
   display: inline-block;
-  padding: 10px 20px 6px 22px;
+  padding: 10px 20px 10px 22px;
   margin-right: 20px;  
 }
 
 .button-group > a.six-people {
   background-color: black;
+  color: white;
 }
 
 .button-group > a.six-people > span {
-  color: white;
 }
 
 .last-div {
@@ -321,18 +321,22 @@ body {
 .footer-wrapper {
   background-color: #f2f2f2;
   overflow: hidden;
-
 }
 
 .footer {
   width: 1080px;
   margin: 30px auto 30px;
-  overflow: hidden;
 }
 
 .footer > ul {
   float: left;
   width: 180px;
+}
+
+.footer::after {
+  content: '';
+  display: block;
+  clear: both;
 }
 
 .footer > ul  > li > span.head {
@@ -343,4 +347,42 @@ body {
 .footer > ul > li {
   font-size: 12px;
   padding: 5px 0;
+}
+
+.footer-bottom {
+  width: 1080px;
+  margin: 0 auto 15px;
+}
+
+.footer-bottom  i {
+  font-size: 19px;
+  vertical-align: middle;
+}
+
+.language-wrapper {
+  display: inline-block;
+}
+
+.language {
+  font-size: 13px;
+  margin-left: 7px;
+}
+
+.language-right {
+  float: right;
+}
+
+.language-right > li {
+  float: left;
+  padding: 0 24px 4px 0;
+}
+
+.language-right > li > a {
+  font-size: 11px;
+}
+
+.language-right::after {
+  display: block;
+  content: '';
+  clear: both;
 }

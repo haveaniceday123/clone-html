@@ -1,0 +1,92 @@
+@charset 'utf-8';
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap');
+
+/* CSS Reset */
+html, body {
+  height: 100%;
+}
+
+body, h1, p, ul, li {
+  padding: 0;
+  margin: 0;
+  font-family: 'Nanum Pen Script', cursive;
+  font-size: 16px;
+}
+
+img {
+  border: 0;
+  line-height: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  line-height: 1;
+}
+
+a:hover, a:focus, a:active { text-decoration: none; }
+
+li {
+  list-style-type: none;
+}
+
+
+/* CSS Design */
+.main-nav {
+  padding: 40px 10px;
+  width: 1248px;
+  margin: 0 auto;
+}
+
+.logo-wrapper {
+  text-align: center;
+}
+
+.logo {
+  height: 26px;
+  padding-bottom: 30px;
+}
+
+.main-gnb {
+  display: flex;
+  padding: 0 30px;
+}
+
+
+.main-gnb-left {
+  display: flex;
+  align-items: flex-start;
+  width: 310px;
+}
+
+.main-gnb-left > a {
+  margin: 0 8px;
+}
+
+.main-gnb-left > a > i,
+.main-gnb-right > a > i {
+  font-weight: 700;
+  font-size: 17px;
+}
+
+.main-gnb-center {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.4rem;
+}
+
+.main-gnb-right {
+  display: flex;
+  width: 310px;
+  justify-content: flex-end;
+}
+
+.main-gnb-right > a {
+  margin: 0 10px;
+}
+
+.main-image {
+  width: 100%;
+  min-width: 1600px;
+}

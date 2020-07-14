@@ -3,7 +3,7 @@ module.exports = {
     middleware: {
       // overrides the second middleware default with new settings
       1: require('connect-history-api-fallback')({
-        index: '/microsoft',
+        index: './index.html',
         verbose: true
       })
     }

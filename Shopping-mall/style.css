@@ -116,3 +116,21 @@ li {
 .mid-text-wrapper > p {
   font-size: 1.3rem;
 }
+
+.ul-wrapper {
+  width: 1200px;
+  margin: 50px auto 0;
+}
+
+.ul-wrapper > li {
+  width: 250px;
+  display: inline-block;
+}
+
+.ul-wrapper > li + li {
+  margin-left: 30px;
+}
+
+.ul-wrapper > li > img {
+  width: 100%;
+}

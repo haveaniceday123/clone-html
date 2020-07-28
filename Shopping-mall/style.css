@@ -6,7 +6,7 @@ html, body {
   height: 100%;
 }
 
-body, h1, p, ul, li {
+body, h1, p, ul, li, h4 {
   padding: 0;
   margin: 0;
   font-family: 'Nanum Pen Script', cursive;
@@ -125,12 +125,87 @@ li {
 .ul-wrapper > li {
   width: 250px;
   display: inline-block;
+  position: relative;
+  margin-top: 20px;
 }
 
 .ul-wrapper > li + li {
-  margin-left: 30px;
+  margin-left: 62px;
+}
+
+.ul-wrapper > li + li:nth-child(4n+1) {
+  margin-left: 0;
 }
 
 .ul-wrapper > li > img {
   width: 100%;
 }
+
+.ul-wrapper > li > div.product-status {
+  color: white;
+  display: inline-block;
+  padding: 0px 5px;
+  font-size: 18px;
+  font-weight: bold;
+  width: 70px;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+}
+
+.ul-wrapper > li > div.product-status.sold-out {
+  background: black;
+}
+
+.ul-wrapper > li > div.product-status.sale {
+  background: #d39850;
+}
+
+.ul-wrapper > li > div.product-overlay {
+  background-color: white;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: opacity .3s linear;
+}
+
+.ul-wrapper > li:hover > div.product-status.sold-out {
+  display: none;
+}
+
+.ul-wrapper > li:hover > div.product-overlay {
+  opacity: 0.6;
+}
+
+div.product-overlay-desc {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  transform: translateY(-50%);
+  text-align: center;
+  font-size: 22px;
+}
+
+div.product-overlay-desc > h4 {
+  font-size: inherit;
+}
+
+div.product-overlay-desc > p {
+  font-size: inherit;
+  font-weight: 500;
+}
+
+div.product-overlay-desc > p > span.brown-text {
+  color: #D39850;
+}
+div.product-overlay-desc > p > span.strikethrough-text {
+  text-decoration: line-through;
+}
+
+
+

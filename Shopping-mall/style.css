@@ -241,6 +241,25 @@ h2.mid-text {
 div.mid-picture-wrapper {
  width: 1200px;
  margin: 0 auto; 
+ position: relative;
+}
+
+div.right-arrow, div.left-arrow {
+  position: absolute;
+  width: 30px;
+  color: white;
+  background: rgba(0,0,0,.12);
+  top: 50%;
+  padding: 12px 10px 10px;
+  transform: translateY(-50%);
+}
+
+div.right-arrow {
+  right: 0px;
+}
+
+div.left-arrow {
+  left: 0;
 }
 
 div.mid-picture-wrapper > img {

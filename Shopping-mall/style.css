@@ -4,6 +4,7 @@
 /* CSS Reset */
 html, body {
   height: 100%;
+  overflow-x: hidden;
 }
 
 body, h1, p, ul, li, h4 {
@@ -33,12 +34,13 @@ li {
 
 /* CSS Design */
 .main-nav {
-  position: absolute;
+  position: fixed;
   left: 0;
   right: 0;
   top: 0;
-  height: 60px;
   padding: 20px 0;
+  background: rgba(255, 255, 255, 0.8);
+  z-index: 999;
 }
 
 .container {
@@ -178,6 +180,10 @@ li {
   display: none;
 }
 
+.ul-wrapper > li:hover > div.product-status.sale {
+  display: none;
+}
+
 .ul-wrapper > li:hover > div.product-overlay {
   opacity: 0.6;
 }
@@ -203,8 +209,42 @@ div.product-overlay-desc > p {
 div.product-overlay-desc > p > span.brown-text {
   color: #D39850;
 }
+
 div.product-overlay-desc > p > span.strikethrough-text {
   text-decoration: line-through;
+}
+
+div.link-button {
+  width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 40px 0;
+}
+
+div.link-button > a {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #3E5939;
+  color: white;
+  font-size: 18px;
+}
+
+h2.mid-text {
+  width: 1200px;
+  margin: 0 auto;
+  padding: 20px 0;
+  letter-spacing: 3px;
+  font-size: 16px;
+  text-align: center;
+}
+
+div.mid-picture-wrapper {
+ width: 1200px;
+ margin: 0 auto; 
+}
+
+div.mid-picture-wrapper > img {
+  width: 100%;
 }
 
 

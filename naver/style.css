@@ -1,0 +1,37 @@
+@charset "utf-8";
+@import url('https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300;400;500;600;700;800&display=swap');
+
+/* CSS Reset */
+body, html {
+  height: 100%;
+  font-family: 'Gothic A1', sans-serif;
+}
+
+body, p, div {
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* CSS Design */
+.pop-up-wrapper {
+  background-color: #3987ff;
+}
+
+.pop-up-wrapper > a.pop-up {
+  display: block;
+  width: 1200px;
+  margin: 0 auto;
+}
+
+.pop-up > i.whale-logo {
+  background: url(images/naver-sprite.png) no-repeat -2px -3px;
+  background-size: 98px 83px;
+  background-position: 0 0;
+  width: 92px;
+  height: 13px;
+}

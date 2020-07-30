@@ -5,6 +5,9 @@
     <title>MOAA(모아) 아메리칸 캐주얼 컨템포러리 브랜드 공식 사이트</title>
     <script src="https://kit.fontawesome.com/917f6fd2e8.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   </head>
   <body>
       <header class="main-nav">
@@ -241,87 +244,61 @@
         <a href="https://amekaji-moaa.com/all">More</a>
       </div>
       <h2 class="mid-text">20 SUMMER COLLECTION LOOKBOOK</h2>
-      <div class="mid-picture-wrapper">
-        <img src="images/mid-bigsize.jpg" alt="">
-        <div class="left-arrow">
-          <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-          viewBox="0 0 490.667 490.667" style="enable-background:new 0 0 490.667 490.667;" xml:space="preserve">
-       <path style="fill:#fff;" d="M239.077,245.333L466.213,18.219c4.171-4.16,4.179-10.914,0.019-15.085
-         c-2.006-2.011-4.731-3.139-7.571-3.134h-192c-2.831-0.005-5.548,1.115-7.552,3.115L24.443,237.781
-         c-4.164,4.165-4.164,10.917,0,15.083l234.667,234.667c2.001,2.007,4.718,3.135,7.552,3.136h192
-         c5.891,0.011,10.675-4.757,10.686-10.648c0.005-2.84-1.123-5.565-3.134-7.571L239.077,245.333z"/>
-       <g>
-       </g>
-       <g>
-       </g>
-       <g>
-       </g>
-       <g>
-       </g>
-       <g>
-       </g>
-       <g>
-       </g>
-       <g>
-       </g>
-       <g>
-       </g>
-       <g>
-       </g>
-       <g>
-       </g>
-       <g>
-       </g>
-       <g>
-       </g>
-       <g>
-       </g>
-       <g>
-       </g>
-       <g>
-       </g>
-       </svg>
+      <div class="swiper-containerr mid-picture-wrapper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <img src="images/mid-bigsize.jpg" alt="">
+          </div>
+          <div class="swiper-slide">
+            <img src="images/mid-bigsize.jpg" alt="">
+          </div>
+          <div class="swiper-slide">
+            <img src="images/mid-bigsize.jpg" alt="">
+          </div>
+          <div class="swiper-slide">
+            <img src="images/mid-bigsize.jpg" alt="">
+          </div>
+          <div class="swiper-slide">
+            <img src="images/mid-bigsize.jpg" alt="">
+          </div>
+          <div class="swiper-slide">
+            <img src="images/mid-bigsize.jpg" alt="">
+          </div>
+          <div class="swiper-slide">
+            <img src="images/mid-bigsize.jpg" alt="">
+          </div>
+          <div class="swiper-slide">
+            <img src="images/mid-bigsize.jpg" alt="">
+          </div>
+          <div class="swiper-slide">
+            <img src="images/mid-bigsize.jpg" alt="">
+          </div>
+          <div class="swiper-slide">
+            <img src="images/mid-bigsize.jpg" alt="">
+          </div>
+          <!-- Add Pagination -->
+          <div class="swiper-pagination"></div>
+          <!-- Add Arrows -->
+          <div class="swiper-button-next right-arrow"></div>
+          <div class="swiper-button-prev left-arrow"></div>
         </div>
-        <div class="right-arrow">
-          <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 490.667 490.667" style="enable-background:new 0 0 490.667 490.667;" xml:space="preserve">
-<path style="fill:#fff;" d="M466.219,237.781L231.552,3.115C229.548,1.115,226.831-0.005,224,0H32
-	c-5.891-0.011-10.675,4.757-10.686,10.648c-0.005,2.84,1.123,5.565,3.134,7.571l227.136,227.115L24.448,472.448
-	c-4.171,4.16-4.179,10.914-0.019,15.085c2.006,2.011,4.731,3.139,7.571,3.134h192c2.831,0.005,5.548-1.115,7.552-3.115
-	l234.667-234.667c4.171-4.16,4.179-10.914,0.019-15.085C466.231,237.794,466.225,237.788,466.219,237.781z"/>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-</svg>
-       </div>
       </div>
     </main>
+
+    <script>
+      var swiper = new Swiper('.swiper-container', {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        loop: true,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+      });
+    </script>
   </body>
 </html>

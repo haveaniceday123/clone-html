@@ -1,6 +1,7 @@
 var tests = 1;
 
 function test() {
-  console.log(tests++);
-  $(".test").text(tests);
-}
+  event.preventDefault();
+  event.stopPropagation();
+  $(".pop-up-wrapper").css('display', 'none');
+}  

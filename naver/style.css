@@ -17,21 +17,104 @@ a {
   color: inherit;
 }
 
+/* CSS Common */
+:root {
+  --reference-width: 1130px;
+}
+
+.sprite-image {
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-image: url(images/naver-sprite.png);
+  background-size: 94px 82px;
+  vertical-align: middle;
+}
+
 /* CSS Design */
 .pop-up-wrapper {
   background-color: #3987ff;
+  height: 49px;
 }
 
-.pop-up-wrapper > a.pop-up {
+.pop-up-inner {
   display: block;
-  width: 1200px;
-  margin: 0 auto;
 }
 
-.pop-up > i.whale-logo {
-  background: url(images/naver-sprite.png) no-repeat -2px -3px;
-  background-size: 98px 83px;
-  background-position: 0 0;
-  width: 92px;
-  height: 13px;
+.whale-text-logo {
+  background-image: url(images/naver-sprite.png);
+  background-size: 94px 82px;
+  width: 104px;
+  height: 21px;
+  vertical-align: middle;
+  margin-top: 13px;
+}
+
+.pop-up-main-image {
+  position: absolute;
+  width: 286px;
+  height: 49px;
+  left: 170px;
+}
+
+.pop-up-wrapper > div.pop-up {
+  display: block;
+  width: var(--reference-width);
+  margin: 0 auto;
+  height: 100%;
+  position: relative;
+}
+
+.pop-up > a.whale-download-button {
+  position: absolute;
+  display: inline-block;
+  box-sizing: border-box;
+  background-color: #1c3457;
+  padding: 7px 13px 6px;
+  color: white;
+  margin-top: 7.5px;
+  font-size: 11px;
+  border-radius: 15px;
+  font-weight: 700;
+  left: 838px;
+}
+
+.pop-up-mid-text {
+  position: absolute;
+  display: inline-block;
+  color: white;
+  height: 49px;
+  left: 475px;
+  font-size: 17px;
+  line-height: 49px;
+}
+
+.pop-up-mid-text > .strong{
+  font-weight: 600;
+}
+
+.pop-up  > a > i.whale-icon {
+  background-position: -44px -54px;
+  width: 18px;
+  height: 18px;
+}
+
+.pop-up-close-button {
+  position: absolute;
+  right: 0;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  color: rgb(247 245 245);
+  font-size: 11px;
+  opacity: 0.6;
+  cursor: pointer;
+  display: inline-block;
+  height: 49px;
+}
+
+.close-icon {
+  background-position: -24px -62px;
+  width: 14px;
+  height: 17px;
+  margin-left: 3px;
 }

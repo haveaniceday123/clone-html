@@ -25,8 +25,6 @@ a {
 .sprite-image {
   display: inline-block;
   background-repeat: no-repeat;
-  background-image: url(images/naver-sprite.png);
-  background-size: 94px 82px;
   vertical-align: middle;
 }
 
@@ -95,7 +93,10 @@ a {
 .pop-up  > a > i.whale-icon {
   background-position: -44px -54px;
   width: 18px;
+  background-image: url(images/naver-sprite.png);
+  background-size: 94px 82px;
   height: 18px;
+  background-size: 94px 82px;
 }
 
 .pop-up-close-button {
@@ -116,5 +117,26 @@ a {
   background-position: -24px -62px;
   width: 14px;
   height: 17px;
+  background-image: url(images/naver-sprite.png);
+  background-size: 94px 82px;
   margin-left: 3px;
+}
+
+.naver-header {
+  width: var(--reference-width);
+  margin: 0 auto;
+  height: 160px;
+}
+
+.naver-main-logo {
+  background-position: -2px -147px;
+  width: 215px;
+  height: 59px;
+  background-image: url(images/naver-main-sprite.png);
+  background-size: 451px 417px;
+  margin-top: 30px;
+}
+
+.search-form {
+  display: inline-block;
 }

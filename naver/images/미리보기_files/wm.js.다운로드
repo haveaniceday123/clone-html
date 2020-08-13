@@ -1,0 +1,313 @@
+// console.log( 'watermark.js' );
+
+var wm = (function(){
+    var waterMarkObj = null;
+    var property = {
+        flieType : undefined,
+        use : false,
+        type : undefined,
+        rotate : 0,
+        repeat : false,
+        alpha : 0,
+        width : 0,
+        height : 0,
+        textProperty : {
+            string : undefined,
+            font : undefined,
+            fontColor : undefined,
+            fontSize : undefined
+        },
+        imageProperty : {
+            imgUrl : undefined
+        },
+        padding : 0
+    };
+    var waterMark = {
+        decrypt : function (str, type) {
+            var arr = [];
+            var decodeText = "";
+            if(window.atob) {
+                decodeText = atob(str);
+            }
+            else {
+                var decodeBase64 = function(s) {
+                    var e={},i,b=0,c,x,l=0,a,r='',w=String.fromCharCode,L=s.length;
+                    var A="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+                    for(i=0;i<64;i++){e[A.charAt(i)]=i;}
+                    for(x=0;x<L;x++){
+                        c=e[s.charAt(x)];b=(b<<6)+c;l+=6;
+                        while(l>=8){((a=(b>>>(l-=8))&0xff)||(x<(L-2)))&&(r+=w(a));}
+                    }
+                    return r;
+                };
+                decodeText = decodeBase64(str);
+            }
+            
+            for(var i = 0 ; i < decodeText.length-16 ; i++){
+                arr.push(decodeText.charCodeAt(i+16) ^ decodeText.charCodeAt(i%16));
+            }
+            var decryptData = arrToString(arr);
+            property.fileType = type;
+            if (window.DOMParser) {
+                // code for modern browsers
+                var parser = new DOMParser();
+                wm.parseXML(parser.parseFromString(decryptData,"text/xml"));
+              } else {
+                // code for old IE browsers
+                var xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+                xmlDoc.async = false;
+                xmlDoc.loadXML(decryptData);
+                wm.parseXML(xmlDoc);
+              }
+        },
+        getXml : function (xmlUrl, fileType) {
+            property.fileType = fileType;
+            $.ajax({
+                type: 'GET',
+                async: false,
+                url: xmlUrl,
+                dataType: 'xml',
+                success: function(xmlDoc) {
+                    wm.parseXML(xmlDoc);
+                },
+                error: function (error) {
+                    console.log('Error : xml load fail!');
+				}
+            });
+        },
+        parseXML : function(obj) {
+            var infoXml = obj;
+            var use = $(infoXml).find("use").text().toLowerCase();
+            property.use = use == "true" ? true : false;
+            if(!property.use) {
+                return;
+            }
+            property.type = $(infoXml).find("text").length != 0 ? "text" : "image";
+            if(property.type === "text") {
+                var fontName = $(infoXml).find('text').attr('font').toLowerCase();
+                property.textProperty.font = fontName == "serif" ? "바탕체, BatangChe, Times New Roman, serif" : "굴림체, GulimChe, Arial, sans-serif";
+                property.textProperty.fontColor = $(infoXml).find('text').attr('fontcolor');
+                property.textProperty.fontSize = parseInt($(infoXml).find('text').attr('fontsize'));
+                property.textProperty.string = $(infoXml).find('string').text();
+                property.padding = getPtToPx(property.textProperty.fontSize/2);
+            }
+            else if(property.type === "image") {
+                var imgName = $(infoXml).find('path').text().split("/");
+                var imgExt = imgName[imgName.length-1].split(".");
+                var imgPath = "wmImage." + imgExt[imgExt.length-1];
+                if(property.fileType == "word") {
+                    property.imageProperty.imgUrl = localSynap.getFileName() + ".files/" + imgPath;
+                }
+                else {
+                    property.imageProperty.imgUrl = imgPath;
+                }
+                property.width = parseInt($(infoXml).find('image').attr('width'));
+                property.height = parseInt($(infoXml).find('image').attr('height'));
+            }
+            property.rotate = parseInt($(infoXml).find('rotate').text()) % 360;
+            property.alpha = 1 - (parseFloat($(infoXml).find('alpha').text()) / 100);
+            var repeat = $(infoXml).find('repeat').text().toLowerCase();
+            property.repeat = repeat == "true" ? true : false;
+        },
+        getWM : function() {
+            if(!property.use) {
+                return null;
+            }
+            if(waterMarkObj === null) {
+                wm.makeWM();
+            }
+            return waterMarkObj;
+        },
+        makeWM : function() {
+            waterMarkObj = document.createElement("div");
+            stopBrowserEvent(waterMarkObj)
+            if(property.type === "text") {
+                $(waterMarkObj).css("float","left")
+                               .css("word-wrap","normal")
+                               .css("font-weight","bold")
+                               .css("text-align","center")
+                               .css("color","#"+property.textProperty.fontColor)
+                               .css("font-size",property.textProperty.fontSize+"pt")
+                               .css("font-family",property.textProperty.font);
+                var preTag = document.createElement("pre");
+                preTag.className = "wt";
+                $(preTag).text(property.textProperty.string);
+                $(preTag).css("font-weight","bold")
+                         .css("font-family",property.textProperty.font)
+                         .css("font-size",property.textProperty.fontSize+"pt")
+                         .css("color","#"+property.textProperty.fontColor)
+                         .css("text-align","inherit")
+                         .css("position","static")
+                         .css("line-height","normal")
+                         .css("margin","0px");
+                $(waterMarkObj).append(preTag);
+                setSize(preTag);
+                $(preTag).css("opacity",property.alpha);
+            }
+            else if(property.type === "image") {
+                waterMarkObj.className = "wm";
+                $(waterMarkObj).css("float","left")
+                               .css("width",property.width)
+                               .css("height",property.height)
+                               .css("text-align","center");
+                var img = document.createElement("img");
+                img.className = "wi";
+                img.src = property.imageProperty.imgUrl;
+                $(img).css("width",property.width)
+                      .css("height",property.height)
+                      .css("opacity",property.alpha);
+                $(waterMarkObj).append(img);
+                setSize(waterMarkObj);
+            }
+        },
+        makeWB : function(parentWidth, parentHeight) {
+	    var minimumWidth = parentWidth;
+	    var minimumHeight = parentHeight;
+	    if(property.fileType === "cell") {
+                var screenWidth = BROWSER.isMobile() ? $(document).width() : screen.availWidth;
+                minimumWidth = screenWidth > parentWidth ? screenWidth : parentWidth;
+                var whiteSpace = window.outerHeight-window.innerHeight;
+                var screenHeight = BROWSER.isMobile() ? $(document).height()-whiteSpace : screen.availHeight-whiteSpace;
+                minimumHeight = screenHeight > parentHeight ? screenHeight : parentHeight;
+	    }
+            var waterMarkBoard = document.createElement("div");
+            waterMarkBoard.className = "wb";
+            waterMarkBoard.id = "wb";
+            $(waterMarkBoard).css("height",minimumHeight)
+                             .css("width",minimumWidth)
+                             .css("position","absolute")
+                             .css("top","0pt")
+                             .css("left","0pt")
+                             .css("right","0pt")
+                             .css("bottom","0pt")
+                             .css("z-index","4000000000")
+                             .css("overflow","hidden");
+
+            var rotateBoard = wm.makeRB(minimumWidth, minimumHeight);
+            $(waterMarkBoard).append(rotateBoard);
+
+            return waterMarkBoard;
+        },
+        setRepeat : function(rep) {
+            property.repeat = rep;
+        },
+        boardResize : function(board, slideWidth, slideHeight, zoomRatio) {
+            $(board).width(slideWidth); 
+            $(board).height(slideHeight);
+            $(board).css('transform', 'scale(' + zoomRatio + ')')
+                    .css('transform-origin', "0px 0px");
+        },
+        //회전된 사각형의 가로,세로를 구함
+        getRotateLength : function(currentWidth, currentHeight) {
+            var deg2radians = Math.PI * 2 / 360;
+            var rad = (360-property.rotate) * deg2radians;
+            //0~90 or 181~270
+            if((property.rotate >= 0 && property.rotate <= 90) || (property.rotate >= 181 && property.rotate <= 270)) {
+                rad = (360-property.rotate) * deg2radians;
+            }
+            //91~180 or 271~360
+            else if((property.rotate >= 91 && property.rotate <= 180) || (property.rotate >= 271 && property.rotate <= 360)) {
+                rad = property.rotate * deg2radians;
+            }
+            var costheta = Math.cos(rad);
+            var sintheta = Math.sin(rad);
+            //회전에 따른 사각형 가로 세로 계산을 위한 좌표값
+            var a = -currentWidth/2;
+            var b = currentHeight/2;
+            var x = -currentWidth/2;
+            var y = -currentHeight/2;
+            var bb = a*sintheta + b*costheta;
+            var xx = x*costheta - y*sintheta;
+            var rotateWidth = Math.abs(xx)*2;
+            var rotateHeight = Math.abs(bb)*2;
+            return [rotateWidth, rotateHeight];
+        },
+        makeRB : function(parentWidth, parentHeight) {
+            var length = wm.getRotateLength(parentWidth, parentHeight);
+            var rotateWidth = length[0];
+            var rotateHeight = length[1];
+
+            var rotateBoard = document.createElement("div");
+            rotateBoard.className = "rotateBoard";
+            $(rotateBoard).css("width",rotateWidth)
+                          .css("height",rotateHeight)
+                          .css("transform","rotate("+property.rotate+"deg)");
+
+            $(rotateBoard).css("margin-left",(parentWidth - rotateWidth) / 2)
+                          .css("margin-top",(parentHeight - rotateHeight) / 2);
+            
+            if(property.repeat) {
+                repeatCol(rotateBoard, rotateWidth, rotateHeight);
+            }
+            else {
+                setCenter(rotateBoard, rotateWidth, rotateHeight);
+            }
+            return rotateBoard;
+        }
+    };
+    setSize = function(obj) {
+        var clone = $(obj).clone();
+        var body = document.getElementsByTagName("body")[0];
+        $(clone).css("visibility","hidden")
+                .css("width","")
+                .css("float","left");
+        if(property.type === "text") {
+            $(body).append(clone);
+            property.width = $(clone).width();
+            property.height = $(clone).height();
+            $(waterMarkObj).css("padding",property.padding)
+        }
+        $(waterMarkObj).css("width",property.width)
+                       .css("height",property.height);
+        $(clone).remove();
+    };
+    setCenter = function(board, parentWidth, parentHeight) {
+        var clone = $(waterMarkObj).clone();
+        $(clone).css("position","absolute")
+                .css("top", parentHeight/2 - (property.height/2+property.padding))
+                .css("left",parentWidth/2 - (property.width/2+property.padding));
+        $(board).append(clone);
+    };
+    repeatRow = function(parentWidth) {
+        var row = document.createElement("div");
+        row.style.height = (property.height + property.padding*2);
+        row.style.width = parentWidth;
+        var isFirst = true;
+        while(parentWidth > 0){
+            var clone = $(waterMarkObj).clone();
+            //첫번째인 경우 padding-left=0;
+            if(isFirst){
+                $(clone).css("padding-left","0pt");
+                isFirst = false;
+            }
+            var calcWidth = property.width + property.padding*2
+            if(parentWidth > calcWidth) {
+                $(row).append(clone);
+            }
+            else {
+                if((parentWidth-property.padding) > 0){
+                    $(clone).css("width",(parentWidth-property.padding));
+                    $(row).append(clone);
+                }
+            }
+            parentWidth -= calcWidth;
+        }
+        return row;
+    };
+    repeatCol = function(board, parentWidth, parentHeight) {
+        var row = repeatRow(parentWidth);
+        var rowHeight = (property.height + property.padding*2);
+        while(parentHeight > 0) {
+            var clone = $(row).clone();
+            if(parentHeight > rowHeight) {
+                parentHeight -= rowHeight;
+            }
+            else {
+                $(clone).css("height",parentHeight);
+                parentHeight -= rowHeight;
+            }
+            $(board).append(clone);
+        }
+    };
+    return waterMark;
+}());

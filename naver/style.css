@@ -7,7 +7,7 @@ body, html {
   font-family: 'Gothic A1', sans-serif;
 }
 
-body, p, div {
+body, p, div, button {
   padding: 0;
   margin: 0;
 }
@@ -20,15 +20,20 @@ a {
 /* CSS Common */
 :root {
   --reference-width: 1130px;
+  --naver-green-color: #19ce60;
 }
 
 .sprite-image {
   display: inline-block;
   background-repeat: no-repeat;
-  background-image: url(images/naver-sprite.png);
-  background-size: 94px 82px;
   vertical-align: middle;
 }
+
+.clear { clear: both; }
+
+.float-left { float: left; }
+
+.float-right { float: right; }
 
 /* CSS Design */
 .pop-up-wrapper {
@@ -95,7 +100,10 @@ a {
 .pop-up  > a > i.whale-icon {
   background-position: -44px -54px;
   width: 18px;
+  background-image: url(images/naver-sprite.png);
+  background-size: 94px 82px;
   height: 18px;
+  background-size: 94px 82px;
 }
 
 .pop-up-close-button {
@@ -116,5 +124,145 @@ a {
   background-position: -24px -62px;
   width: 14px;
   height: 17px;
+  background-image: url(images/naver-sprite.png);
+  background-size: 94px 82px;
   margin-left: 3px;
+}
+
+.naver-header {
+  width: var(--reference-width);
+  margin: 0 auto;
+  line-height: 160px;
+  padding: 0 30px;
+}
+
+.naver-main-logo {
+  background-position: -2px -165px;
+  width: 225px;
+  height: 50px;
+  background-image: url(images/naver-main-sprite.png);
+  background-size: 483px 437px;
+  margin-left: -9px;
+}
+
+.search-form {
+  display: inline-block;
+  border: 2px solid #19ce60;
+  margin-left: 20px;
+  padding: 10px;
+  line-height: 33px;
+  width: 559px;
+  position: relative;
+}
+
+.search-form > input {
+  height: 25px;
+  font-size: 19px;
+  width: 448px;
+  outline: none;
+  font-weight: bold;
+  border: none;
+  vertical-align: middle;
+}
+
+.search-form > button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 54px;
+  border: none;
+  outline: none;
+  background: none;
+  background-color: #19ce60;
+}
+
+.search-form > button > i.search-icon{
+  background-position: -434px -150px;
+  width: 33px;
+  height: 34px;
+  display: inline-block;
+  background-image: url(images/naver-main-sprite.png);
+  background-size: 483px 406px;
+}
+
+.search-form  > i.keyboard-icon{
+  display: inline-block;
+  width: 22px;
+  height: 20px;
+  background-image: url(images/naver-main-sprite.png);
+  background-position: -408px -254px;
+  background-size: 482px 412px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.search-form > div.keyboard-hover-speech-bubble {
+  display: none;
+  position: absolute;
+  width: 53px;
+  height: 29px;
+  background: var(--naver-green-color);
+  text-align: center;
+  color: white;
+  border-radius: 5px;
+  font-size: 11px;
+  vertical-align: middle;
+  right: 70px;
+  line-height: 29px;
+  top: 40px;
+  padding: 0 6px;
+}
+
+
+.search-form > i.keyboard-icon:hover {
+  background-position: -64px -373px;
+}
+
+.search-form > i.keyboard-icon:hover + div.keyboard-hover-speech-bubble {
+  display: inline-block;
+  z-index: 2;
+}
+
+.search-form  > i.down-arrow{
+  display: inline-block;
+  width: 17px;
+  height: 10px;
+  background-image: url(images/naver-main-sprite.png);
+  background-position: -436px -365px;
+  background-size: 482px 412px;
+}
+
+.auto-input-wrapper {
+  width: 525px;
+  position: absolute;
+  z-index: 1;
+  top: 54px;
+  background-color: white;
+  left: -2px;
+  border: 1px solid #e2dddd;
+}
+
+.auto-input-wrapper > .auto-input-words {
+  display: inline-block;
+  font-size: 14px;
+  padding: 20px 15px;
+  vertical-align: middle;
+}
+
+.auto-input-wrapper > .auto-input-function-wrapper {
+  padding: 5px 15px;
+  font-size: 12px;
+}
+
+.auto-input-wrapper > .auto-input-function-wrapper > section > div {
+  padding: 0px 4px;
+}
+
+.auto-input-wrapper > .auto-input-function-wrapper > section > div.devider {
+  padding: 0;
+  width: 0;
+  border-right: 1px solid black;
+  height: 10px;
+  margin: 8px 5px 0px;
 }

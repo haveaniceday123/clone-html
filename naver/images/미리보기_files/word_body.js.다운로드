@@ -1,0 +1,598 @@
+
+// word_body.js
+console.log( 'word_body.js');
+
+localSynap = (function() {
+	pageLoader = function () {
+		localSynap.mark = wm.getWM();
+		this.curHeight = 0;
+		this.pageSize = 1; // 총 페이지 수
+		this.list =new Array();
+		this.cnt = 0;
+		this.header=0;
+		this.footer=0;
+
+		this.pageHeight = localSynap.bodyHeight;
+		this.headerHeight = 0;
+		
+		this.fileNum = 1; // 렌더링된 파일수
+		this.parent_node_name = '#content_body';
+		this.div_page_name = 'div_page';
+		this.isAlreadyPaging = false;
+		this.pagebreaker = function (div) {
+			this.curHeight = 0;
+			var fileType = localSynap.fileType.toLowerCase();
+			this.curHeight += this.headerHeight;
+			var clone = this.header.clone()
+			$(clone).find('.pagenumber').text(this.pageSize);
+			$(div).append(clone);
+			for(i=0; i<this.cnt; i++) {
+				if (this.list[i].hasClass('synap_word_header')
+				    || this.list[i].hasClass('synap_word_footer')) {
+					continue;
+				}
+				$(div).append(this.list[i]);
+			}
+            // 다썼으면 클리어한다.
+            this.list = [];
+            
+			clone = this.footer.clone();
+			$(clone).find('.pagenumber').text(this.pageSize);
+			$(div).append(clone);
+			this.cnt = 0;
+			this.pageSize++;
+			$(this.parent_node_name).append(div);
+			appendWM(div);
+			$(this.parent_node_name).append('<div class="pagebreaker">&#160;</div>');
+			div = document.createElement('div');
+			$(div).attr('id', this.div_page_name);
+			$(div).attr('class', 'inner page style_change');
+			return div;
+		}
+		
+		this.getPtToPx = function (size_pt){
+			return (size_pt * (96/72));
+		}
+		
+		this.getPxToPt = function (size_px){
+			return (size_px * (72/96));
+		}
+
+		this.makePage = function (p, div) {
+			var currentFontSize = this.getPxToPt(parseInt(p.css('font-size')));
+			var pHeight = this.getPxToPt(parseInt(p.outerHeight(true)));
+
+			var oldCurHeight = this.curHeight;
+            // 높이를 무시해야 하는 케이스들
+			if( p[0].tagName.toLowerCase() == 'div' ) {
+				if( p.css('position') == 'absolute' || ( p.css('z-index') != 'auto' && p.css('z-index') != 0 )) {
+					pHeight = 0;
+				}else if( p.css('float') == 'left' || p.css('float') == 'right') {
+					pHeight = 0;
+				}
+			}
+            // DOCX의 머리글/바닥글의 높이는 제외해야 본문영역 계산이 원본과 유사하다.
+            var fileType = localSynap.fileType.toLowerCase();
+            if (fileType === 'doc' || fileType === 'docx') {
+				if (p.hasClass('synap_word_header') == true) {
+					this.headerHeight = this.getPxToPt(parseInt(p.outerHeight(true)));
+				}
+				else if (p.hasClass('synap_word_footer') == true) {
+					var footerHeight = this.getPxToPt(parseInt(p.outerHeight(true))) + this.getPxToPt(parseInt(p.css('bottom')));
+					//페이지의 bottom-padding영역을 바닥글의 영역으로 구성
+					this.footer.css('bottom','0pt');
+					this.footer.css('min-height',footerHeight+'pt');
+					//바닥글 높이 + bottom값이 여백보다 작으면 계산할 필요가 없음(여백에 포함되므로 content영역을 침범하지 않는다)
+					if(footerHeight > localSynap.pageMarginBottom) {
+						//바닥글 높이 + bottom값이 여백보다 크면 공통된 부분만큼 계산(content영역을 침범하는 만큼 계산)
+						var overlapArea = footerHeight - localSynap.pageMarginBottom;
+						this.pageHeight -= overlapArea;
+						var styles = '.style_change {padding-bottom: ' + (overlapArea+localSynap.pageMarginBottom) + 'pt;min-height: '+ this.pageHeight + 'pt}';
+						$('<style type="text/css">'+ styles +'</style>').appendTo("head");
+					}
+				}
+			}
+			
+			this.curHeight += pHeight;
+			if( this.pageHeight < parseInt(this.curHeight) && oldCurHeight > this.pageHeight/2 ) {
+				div = this.pagebreaker(div);
+				this.curHeight += pHeight;
+				this.isAlreadyPaging = true;
+			}else{
+				this.isAlreadyPaging = false;
+			}
+			if (BROWSER.PC.isIE() && BROWSER.VERSION.IE() <= 9) {
+				this.list[this.cnt++] = $(p[0].outerHTML);
+			} else {
+				this.list[this.cnt++] = p;
+			}
+			return div;
+		}
+		
+		this.readHidden = function (hiddenName, self_obj, target){
+			$(hiddenName).children().each( function() {
+				var p = $(this);
+                var tagName = p[0].tagName.toLowerCase();
+				if( tagName == 'style'  || tagName == 'meta' || tagName == 'title') {
+					p.remove();
+				} else {
+                    var className = p[0].className.toLowerCase();
+					if( className == 'pagebreaker' || className == 'sectionbreaker') {
+						if (!this.isAlreadyPaging){ // 계산되어 페이징이 바로전에 들어갔으면 강제 페이징을 건너뛴다.
+							target = self_obj.pagebreaker(target);
+						}
+						this.isAlreadyPaging = false;
+						p.remove();
+					}else{
+						target = self_obj.makePage(p, target);
+						p.remove();
+					}
+				}
+			});
+			return target;
+		}
+
+		this.appendContent = function (contents) {
+			$('#hidden_section').append(contents);
+			$('#hidden_section').css('display', '');
+			if( this.header == 0 ) {
+				this.header = $('#hidden_section > .synap_word_header');
+				if (BROWSER.PC.isIE() && BROWSER.VERSION.IE() <= 9 && this.header.length > 0) {
+					this.header = $($('#hidden_section > .synap_word_header')[0].outerHTML);
+				}
+				$(this.header).find('.pagenumber').text(1);
+				$(this.header).find('.totalnumber').text(1);
+			}
+			if( this.footer == 0 ) {
+				this.footer = $('#hidden_section > .synap_word_footer');
+				if (BROWSER.PC.isIE() && BROWSER.VERSION.IE() <= 9 && this.footer.length > 0) {
+					this.footer = $($('#hidden_section > .synap_word_footer')[0].outerHTML);
+				}
+				$(this.footer).find('.pagenumber').text(1);
+				$(this.footer).find('.totalnumber').text(1);
+				$(this.footer).removeAttr('style');
+			}
+			var div = document.createElement('div');
+			$(div).attr('id', this.div_page_name);
+			$(div).attr('class', 'inner page style_change');
+			
+			// 페이징이 안된 상태에서 hwp97, hwp2k는 div_page에 본문 내용이 모두 다 있음
+			var hidden_section_name = '#hidden_section >  #div_page';
+			if ($(hidden_section_name).length==0){
+				hidden_section_name = '#hidden_section';
+			}
+			var self_obj = this;
+			var loop_cnt = 0;
+			// ie9이하에서 hidden 노드의 append()타임이 느려서 타이밍이 안맞는 문제 발생 처리
+			while($(hidden_section_name).children().length && loop_cnt<10){
+				div = this.readHidden(hidden_section_name, self_obj, div);
+				loop_cnt++;
+			}
+			if( this.fileNum == localSynap.filesPageCount && this.cnt > 0 ) {
+				$(this.header).find('.pagenumber').text(this.pageSize);
+				$(div).append(this.header);
+				for(i=0; i<this.cnt; i++) {
+					if (this.list[i].hasClass('synap_word_header')
+					    || this.list[i].hasClass('synap_word_footer')) {
+						continue;
+					}
+
+					$(div).append(this.list[i]);
+				}
+				$(this.footer).find('.pagenumber').text(this.pageSize);
+				$(div).append(this.footer);
+				$(this.parent_node_name).append(div);
+				$('.totalnumber').text(this.pageSize);
+				appendWM(div);
+			}
+			$('#hidden_section').css('display', 'none');
+		}
+		
+		this.iFrameForceReflow = function(){ // 스킨용
+			if ($('#innerWrap') != null){
+				var h = $('#innerWrap').height();
+				$('#innerWrap').height(h + 1);
+				$('#innerWrap').height(  h  );
+			}
+		}
+		
+		this.loadPageLast = function (){
+			removeSpinner();
+			if (BROWSER.isMobile()){
+				if (BROWSER.VERSION.isAndroidICS()){
+					setTimeout('localSynap.imageFinish();', 800);
+				}
+				if( BROWSER.VERSION.isAndroidJellyBean() ){  // 스킨용
+					this.iFrameForceReflow();
+				}
+				member.changeAndroid2Footer();
+			}
+			localSynap.completed = 1;
+			localSynap.onLoadedBody && localSynap.onLoadedBody();
+		}
+		
+		this.setFocusBody = function () {
+			// for keyboard navigation
+			if(!BROWSER.isMobile()) {
+				var innerWrap = window.parent.document.getElementById('innerWrap');
+				// TODO : IE7에서 contentDocument를 contentWindow.document로 똑같이 쓸 수 있다.
+				if (innerWrap && innerWrap.contentDocument){
+					var innerBody = innerWrap.contentDocument.getElementsByTagName('body')[0];
+					innerWrap.focus();
+					innerBody.focus();
+				}
+			}
+		}
+	}
+	
+	var member = {
+		reTry : 0,
+		isAppend : 1,
+		refreshTimer : null,
+		pageLoader: undefined,
+		fileExt : '.htm',
+
+		_replaceAll : function (str, searchStr, replaceStr) {
+			return str.split(searchStr).join(replaceStr);
+		},
+
+		changeAndroid2Footer : function () {
+			if (typeof localSynap.resize =='function'){
+				localSynap.resize(); // 다 그리고 난 후에 브라우저가 header를 다시 그릴 수 있도록 해야함
+			}
+		},
+		getContentFileName : function(){
+			fileName = localSynap.getFileResultDir().split('/').pop()+'/'+member.pageLoader.fileNum + member.fileExt;
+			if( BROWSER.MOBILE.isIOS() && (BROWSER.VERSION.IOS() <= 7 || BROWSER.VERSION.IOS() >= 10) && typeof localSynap.getResultDir()==='string'){
+				fileName = localSynap.getResultDir() + fileName;
+			}
+			return fileName;
+		},
+		loadPageAlreadyMake : function () {
+			clearTimeout(member.refreshTimer);
+			if( member.isAppend == 1 && member.pageLoader.fileNum <= localSynap.filesPageCount ){
+				member.isAppend = 0;
+				fileName = member.getContentFileName();
+				$.ajax(encodeURI(fileName),
+					{
+					dataType : 'html',
+					success : function(contents) {
+						if(member.pageLoader.fileNum==localSynap.filesPageCount) {
+							for(var lx=14; lx<32; lx++) {
+								if(contents.substr(contents.length-lx, 7)=="</body>") {
+									contents = contents.substring(0, contents.length-lx);
+									break;
+								}
+							}
+						}
+						if (BROWSER.isMobile() && BROWSER.GRAPHIC.isNotIFrame()){
+							var findStr = localSynap.getFileName()+'.files';
+							contents = member._replaceAll(contents, findStr, localSynap.getFileResultDir());
+						}
+						try {
+							$(member.pageLoader.parent_node_name).append(contents); // Todo... parent_node 입력받고 있음
+							var div = member.pageLoader.fileNum == localSynap.filesPageCount ? $(member.pageLoader.parent_node_name).children().last() : $(member.pageLoader.parent_node_name).children().last().prev();
+							$(div).find('.pagenumber').text(member.pageLoader.fileNum);
+							$(div).find('.totalnumber').text(localSynap.filesPageCount);
+							appendWM(div);
+							$('p.synap-single-line-display').each(function(index, elem){
+								var $pp = $('#hidden_section').prepend(elem.cloneNode(true));
+								var doubleLineHeight = $pp.outerHeight() * 2 - 1;	// IE 1Line : 26, 2Line : 51 case fix
+
+								$(elem).removeClass('synap-single-line-display');
+								$pp.empty();
+
+								var initHeight = $(elem).outerHeight();
+								if( initHeight < doubleLineHeight) return;
+								
+								var s = parseFloat($(elem).find('span').css('letter-spacing')), e = -1;
+								while( $(elem).outerHeight() >= doubleLineHeight && e > -30){
+									e *= 2;
+									$(elem).find('span').css('letter-spacing', s + e + 'pt');
+								}
+								if( $(elem).outerHeight() == initHeight ){		// Single-line view fail
+									console.log && console.log('single-line-process Error');
+									$(elem).find('span').css('letter-spacing', s + 'pt');
+									return;
+								}
+
+								var mid = (s+e)/2.0;
+								while( s - mid > 0.05 ){
+									$(elem).find('span').css('letter-spacing', mid + 'pt');
+									
+									if( $(elem).outerHeight() < doubleLineHeight ){
+										e = mid;
+									}else{
+										s = mid;
+									}
+									mid = (s+e) / 2;
+								}
+								$(elem).find('span').css('letter-spacing', e + 'pt');
+							});
+							member.isAppend = 1;
+							member.pageLoader.fileNum++;
+							member.pageLoader.setFocusBody();
+						}catch(e){
+							member.isAppend = 1;
+							console.log('error='+e);
+						}
+						if(member.pageLoader.fileNum>=localSynap.filesPageCount) {
+							member.refreshTimer = setTimeout('localSynap.loadPage();', 1000);
+						}else{
+							loadSpinner('page1');
+							member.refreshTimer = setTimeout('localSynap.loadPage();', 500);
+						}
+					},
+					error: function (xhr, ajaxOptions, thrownError) {
+						member.isAppend = 1;
+						if(member.pageLoader.fileNum>=localSynap.filesPageCount) {
+							member.refreshTimer = setTimeout('localSynap.loadPage();', 1000);
+						}else{
+							member.refreshTimer = setTimeout('localSynap.loadPage();', 500);
+						}
+					}
+				});
+			} else if (member.pageLoader.fileNum == (localSynap.filesPageCount+1)){
+				member.pageLoader.fileNum++;
+				member.pageLoader.pageSize = localSynap.filesPageCount;
+				member.pageLoader.loadPageLast();
+			}
+		},
+		
+		loadPageMake : function () {
+			clearTimeout(member.refreshTimer);
+			if( member.isAppend == 1 && member.pageLoader.fileNum <= localSynap.filesPageCount ){
+				member.isAppend = 0;
+				fileName = member.getContentFileName();
+				$.ajax(encodeURI(fileName),
+				{
+					dataType : 'html',
+					success : function(contents) {
+						if(member.pageLoader.fileNum==localSynap.filesPageCount) {
+							for(var lx=14; lx<32; lx++) {
+								if(contents.substr(contents.length-lx, 7)=="</body>") {
+									contents = contents.substring(0, contents.length-lx);
+									break;
+								}
+							}
+						}
+						if (BROWSER.isMobile() && BROWSER.GRAPHIC.isNotIFrame()){
+							var findStr = localSynap.getFileName()+'.files';
+							contents = member._replaceAll(contents, findStr, localSynap.getFileResultDir());
+						}
+						try {
+							member.pageLoader.appendContent(contents);
+							member.isAppend = 1;
+							member.pageLoader.fileNum++;
+							member.pageLoader.setFocusBody();
+							// PRJAM-4316 이미지 복사방지
+							localSynap = getSynapPageObject();
+							if(!typeof properties == "undefined" && !localSynap.isAllowCopy()) {
+								if(BROWSER.isMobile()) {
+									$((member.pageLoader.parent_node_name+' img[src]')).each(function() {
+										var src = this.getAttribute('src');
+										this.removeAttribute('alt', '');
+										this.removeAttribute('src', '');
+										this.setAttribute('style', this.getAttribute('style') + ';background-image:url(' + src + ');');
+										this.style.backgroundSize = this.style.width + " " + this.style.height;
+									});
+								}
+							}
+						}catch(e){
+							member.isAppend = 1;
+							member.reTry++;
+							console.log('error='+e);
+						}
+						if (member.reTry<10){
+							if(member.pageLoader.fileNum>=localSynap.filesPageCount) {
+								member.refreshTimer = setTimeout('localSynap.loadPage();', 1000);
+							}else{
+								loadSpinner('page');
+								member.refreshTimer = setTimeout('localSynap.loadPage();', 500);
+							}
+						}
+						else {
+							removeSpinner();
+							var errText = "This is an invalid file.";
+							console.log('error='+errText);
+							alert(errText);
+						}
+					},
+					error: function (xhr, ajaxOptions, thrownError) {
+						member.isAppend = 1;
+						if(member.pageLoader.fileNum>=localSynap.filesPageCount) {
+							member.refreshTimer = setTimeout('localSynap.loadPage();', 1000);
+						}else{
+							member.refreshTimer = setTimeout('localSynap.loadPage();', 500);
+						}
+					}
+				});
+			} else if (member.pageLoader.fileNum == (localSynap.filesPageCount+1)){
+				member.pageLoader.fileNum++;
+				member.pageLoader.loadPageLast();
+			}
+		},
+		init: function() {
+			if (member.pageLoader == undefined) {
+				member.pageLoader= new pageLoader();
+			}
+			if(BROWSER.adjustXhtml()) {
+				member.fileExt = '.xhtml';
+			}
+			docKeyboardControl();
+		}
+	}
+
+	var wordbody = {
+		completed : 0,
+		start : function(){
+			member.init();
+			wordbody.loadPage();
+		},
+
+		loadPage : function(){
+			if (localSynap.paging==='true'){
+				member.loadPageAlreadyMake();
+			}else{
+				member.loadPageMake();
+			}
+		},
+		imageFinish : function (){
+			var newp = document.createElement('p');
+			$(newp).text('0');
+			$(newp).css('color','#c0c0c0');
+			$('body').append(newp);
+		},
+		getPageSize : function (){
+			return member.pageLoader.pageSize;
+		}
+	}
+	return $.extend(localSynap, wordbody);
+})();
+
+function getUrlExt(url){
+	var strUrl = url.substr(url.lastIndexOf('/') + 1);
+	var extName = strUrl.substr(strUrl.lastIndexOf(".")+1, strUrl.length);
+	return extName;
+}
+function getUrlName(url){
+	var strUrl = url.substr(url.lastIndexOf('/') + 1);
+	return strUrl;
+}
+function getUrlNameExceptExt(url){
+	var strUrl = url.substr(url.lastIndexOf('/') + 1);
+	var strName = strUrl.substr(0, strUrl.lastIndexOf("."));
+	return strName;
+}
+
+function getUrlDir(url){
+	var strUrl = url.substr(0, url.lastIndexOf('/')+1);
+	return strUrl;
+}
+
+function getXml(fileName) {
+	xmlUrl = fileName + '.xml';
+	$.ajax({
+		type: 'GET',
+		async: false,
+		url: xmlUrl,
+		dataType: 'xml',
+		success: parseXML
+	});
+};
+
+function parseXML(xml) {
+	localSynap.infoXml = xml;
+	localSynap.fileType = $(localSynap.infoXml).find('file_type').text();
+	localSynap.fileName = $(localSynap.infoXml).find('file_name').text();
+	localSynap.pageSize = 0;
+	localSynap.filesPageCount = parseInt($(localSynap.infoXml).find('filespage_cnt').text());
+	localSynap.pageHeight = parseInt($(localSynap.infoXml).find('height').text());
+	localSynap.pageWidth = parseInt($(localSynap.infoXml).find('width').text());
+	localSynap.pageMarginTop = parseInt($(localSynap.infoXml).find('margin_top').text());
+	localSynap.pageMarginBottom = parseInt($(localSynap.infoXml).find('margin_bottom').text());
+	localSynap.pageMarginLeft = parseInt($(localSynap.infoXml).find('margin_left').text());
+	localSynap.pageMarginRight = parseInt($(localSynap.infoXml).find('margin_right').text());
+	localSynap.paging = $(localSynap.infoXml).find('paging').text();
+	
+	localSynap.bodyHeight = localSynap.pageHeight - localSynap.pageMarginTop - localSynap.pageMarginBottom;
+	localSynap.bodyWidth = localSynap.pageWidth - localSynap.pageMarginLeft - localSynap.pageMarginRight;
+}
+
+function loadSpinner(pageClassName){
+	$('.loading_spinner').remove();
+	
+	var opts = {
+	  lines: 11 // The number of lines to draw
+	, length: 0 // The length of each line
+	, width: 12 // The line thickness
+	, radius: 30 // The radius of the inner circle
+	, scale: 1.25 // Scales overall size of the spinner
+	, corners: 0.5 // Corner roundness (0..1)
+	, color: '#435c85' // #rgb or #rrggbb or array of colors
+	, opacity: 0.25 // Opacity of the lines
+	, rotate: 0 // The rotation offset
+	, direction: 1 // 1: clockwise, -1: counterclockwise
+	, speed: 1 // Rounds per second
+	, trail: 65 // Afterglow percentage
+	, fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
+	, zIndex: 2e9 // The z-index (defaults to 2000000000)
+	, className: 'spinner' // The CSS class to assign to the spinner
+	, top: '50%' // Top position relative to parent
+	, left: '50%' // Left position relative to parent
+	, shadow: false // Whether to render a shadow
+	, hwaccel: false // Whether to use hardware acceleration
+	, position: 'absolute' // Element positioning
+	}
+	var target = document.createElement('div'); target.setAttribute('id', 'div_page'); target.setAttribute('class', 'inner loading_spinner ' + pageClassName);
+	document.getElementById('content_body').appendChild(target);
+	var spinner = new Spinner(opts).spin(target);
+}
+
+function removeSpinner(){
+	$('.loading_spinner').remove();
+}
+
+function replaceDocument(fileNameOnly, extName) {
+	if (BROWSER.adjustXhtml() && extName=="htm") {
+		document.location.replace(fileNameOnly+".view.xhtml");
+	} else if (BROWSER.adjustHtml() && extName=="xhtml") {
+		document.location.replace(fileNameOnly+".view.htm");
+	}
+}
+
+function appendWM(div) {
+	if(localSynap.mark != null) {
+		var boardHeight = $(div).height()+parseInt($(div).css("padding-top"))+parseInt($(div).css("padding-bottom"));
+		var boardWidth = $(div).width()+parseInt($(div).css("padding-left"))+parseInt($(div).css("padding-right"));
+		var board = wm.makeWB(boardWidth,boardHeight);
+		$(div).append(board);
+	}
+}
+
+localSynap.contentReadyFunc = function() {
+	window.onscroll = function(e){
+		localSynap.onScroll && localSynap.onScroll(e);
+	}
+		
+	if (typeof localSynap.properties.xmlObj == "undefined") { // view.htm을 직접 호출하는 경우
+		var viewFileName = getUrlName(document.location.pathname); //xxx.hwp.view.htm
+		var extName = getUrlExt(document.location.pathname); // htm
+		var viewFileNameOnly = getUrlNameExceptExt(viewFileName); //xxx.hwp.view
+		var fileNameOnly = getUrlNameExceptExt(viewFileNameOnly); //xxx.hwp
+
+		replaceDocument(fileNameOnly, extName);
+		getXml(fileNameOnly);
+		localSynap.getFileName = function() {
+			return localSynap.fileName;
+		}
+		localSynap.getFileType = function() {
+			return localSynap.fileType;
+		}
+		localSynap.getFileResultDir = function(){
+			return (getUrlDir(document.location.pathname) + localSynap.fileName + '.files');
+		}
+	}else{
+		parseXML(localSynap.properties.xmlObj);
+	}
+	if(jsValue != "") {
+		if(!(BROWSER.PC.isIE() && BROWSER.VERSION.IE()<=9)) {
+			wm.decrypt(jsValue, "word");
+		}
+		else {
+			$("body").empty();
+			alert("Not support current browser");
+			return;
+		}
+	}
+	if( localSynap.isAllowCopy && !localSynap.isAllowCopy() ){
+		var content_body = document.getElementById('content_body');
+		stopBrowserEvent(content_body);
+	}
+	localSynap.start();
+}
+
+// DOCUMENT READY FUNC
+$(document).ready(function() {
+	localSynap.contentReadyFunc();
+});

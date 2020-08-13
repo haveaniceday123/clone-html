@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0142)http://gw.nconnect.co.kr/resources/synap/skin/doc.html?fn=AFB4B102DA194BC1A1FCEF58FCCC7B51&rs=/api/preview/rs/AFB4B102DA194BC1A1FCEF58FCCC7B51 -->
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>미리보기</title>
+		<meta content="IE=8,IE=10" http-equiv="X-UA-Compatible">
+		
+		<meta content="Synap Document Viewer 2016(v4.8.0)" name="GENERATOR">
+		<script src="./미리보기_files/jquery.min.js.다운로드" type="text/javascript"></script>
+		<script src="./미리보기_files/spin.min.js.다운로드" type="text/javascript"></script><style type="text/css"></style>
+		<script src="./미리보기_files/api.js.다운로드" type="text/javascript"></script>
+		<script src="./미리보기_files/common.js.다운로드" type="text/javascript"></script>
+		<script src="./미리보기_files/browser_check.js.다운로드" type="text/javascript"></script>
+        <link rel="icon" href="http://gw.nconnect.co.kr/resources/images/favicon/DO_favicon.ico">
+		<link rel="stylesheet" type="text/css" href="./미리보기_files/style.css">
+		<link rel="stylesheet" type="text/css" href="./미리보기_files/print.css" media="print">
+		<style type="text/css">v\:shape,v\:shapetype,v\:formulas,v\:fill,v\:f,v\:handles,v\:h,v\:stroke,v\:line,v\:path,v\:textpath,v\:textbox,v\:group,v\:image,v\:rect,v\:imagedata,v\:arc,v\:curve,v\:oval,v\:polyline,v\:roundrect {
+				behavior: url(#default#VML);
+			}
+			o\:* {
+				behavior: url(#default#VML);
+			}
+		</style>
+		<style type="text/css">
+			.fullScreenOnly { display: none; }
+			:fullscreen .fullScreenOnly { display: block;} 
+			:-webkit-full-screen .fullScreenOnly { display: block; }
+			:-moz-full-screen .fullScreenOnly { display: block; }
+			:-ms-full-screen .fullScreenOnly { display: block; }
+			:-o-full-screen .fullScreenOnly { display: block; }
+			:fullscreen .normalScreenOnly { display: none !important;} 
+			:-webkit-full-screen .normalScreenOnly { display: none !important; }
+			:-moz-full-screen .normalScreenOnly { display: none !important; }
+			:-ms-full-screen .normalScreenOnly { display: none !important; }
+			:-o-full-screen .normalScreenOnly { display: none !important; }
+			:fullscreen #container { top: 0; height: 100%; }
+			:-webkit-full-screen #container { top: 0; height: 100%; }
+			:-moz-full-screen #container { top: 0; height: 100%; }
+			:-o-full-screen #container { top: 0; height: 100%; }
+			:-ms-full-screen #container { top: 0; height: 100%; }
+			*+html,body{height:100%;overflow:hidden;}
+		</style>
+		<script type="text/javascript">
+			var ieCompatible = 8;
+		</script>
+	<script type="text/javascript" src="./미리보기_files/common_skin.js.다운로드"></script><script type="text/javascript" src="./미리보기_files/word_skin.js.다운로드"></script></head>
+	<body cz-shortcut-listen="true">
+		<script type="text/javascript">
+			(function () {
+				if( BROWSER.isMobile() ){
+					location.href = location.href.replace(/doc.html/, 'doc_mobile.xhtml');
+				}
+				api.loadCommon();
+                if (api.getParameter("originName")) {
+                    $('title').prop('text', decodeURIComponent(api.getParameter("originName")));
+                }
+
+				if (localSynap.properties.isRenderServer === true) {
+					var key = api.getParameter('key');
+					key = key.replace('#', '');
+
+					var contextPath = api.getParameter('contextPath');
+					if (contextPath!=undefined){
+						contextPath = contextPath.replace('#', '');
+						contextPath = contextPath[contextPath.length-1] == '/' ? contextPath : contextPath + '/';
+					}
+					
+					api.parseStatus(key, contextPath);
+					
+				} else {
+					var fileName = api.getParameter('fn');
+					if (fileName!=undefined){
+						fileName = fileName.replace('#', '');
+					}
+					var rsDir = api.getParameter('rs');
+					if (rsDir!=undefined){
+						rsDir = rsDir.replace('#', '');
+						rsDir = rsDir[rsDir.length-1] == '/' ? rsDir : rsDir + '/';
+					}else {
+						rsDir = "/hcv_viewer_skin/";
+					}
+					api.getXml(fileName, rsDir);
+				}
+			})();
+		</script>
+        <div id="loading">
+        </div>
+	
+
+<div id="wrap">
+	<!-- Header START -->
+	<div id="headerWrap" class="normalScreenOnly">
+		<div id="header" class="headerShadow dk1">
+			<!-- Logo START -->
+			<div id="headLogo"><img src="./미리보기_files/logo.png" alt="로고"></div>
+			<!-- Logo END -->
+			<!-- Title START -->
+			<!-- <div id="headTitle" class="title tx1" style><img id="iconImage" align="absmiddle" alt="아이콘"/></div> -->
+			<!-- Title END -->
+			<!-- Header right START -->
+			<div id="headRight" class="navigation dk1">
+				<div class="gnb">
+					<a id="downloadBtn" href="http://gw.nconnect.co.kr/resources/synap/skin/doc.html?fn=AFB4B102DA194BC1A1FCEF58FCCC7B51&amp;rs=/api/preview/rs/AFB4B102DA194BC1A1FCEF58FCCC7B51#" title="다운로드" tabindex="1" style="display:none;"><img src="./미리보기_files/navi_download.png" alt="다운로드" title="다운로드"></a>
+					<a id="printBtn" href="http://gw.nconnect.co.kr/resources/synap/skin/doc.html?fn=AFB4B102DA194BC1A1FCEF58FCCC7B51&amp;rs=/api/preview/rs/AFB4B102DA194BC1A1FCEF58FCCC7B51#" title="인쇄" tabindex="2" style="display:none;"><img src="./미리보기_files/navi_print.png" alt="인쇄" title="인쇄"></a>
+					<!-- sns layer START -->
+					<a id="snsBtn" href="http://gw.nconnect.co.kr/resources/synap/skin/doc.html?fn=AFB4B102DA194BC1A1FCEF58FCCC7B51&amp;rs=/api/preview/rs/AFB4B102DA194BC1A1FCEF58FCCC7B51#" title="공유" tabindex="4" style="display:none;"><img src="./미리보기_files/navi_share.png" alt="공유" title="공유"></a>
+					<!-- sns layer END -->
+					<a id="fullScreenBtn" href="http://gw.nconnect.co.kr/resources/synap/skin/doc.html?fn=AFB4B102DA194BC1A1FCEF58FCCC7B51&amp;rs=/api/preview/rs/AFB4B102DA194BC1A1FCEF58FCCC7B51#" title="전체화면" tabindex="3"><img src="./미리보기_files/navi_fullscreen.png" alt="전체화면" title="전체화면"></a>
+				</div>
+			</div>
+			<!-- Header right END -->
+		</div>
+	</div>
+	<!-- Header END -->
+	<!-- Body START -->
+	<div id="container" class="lt1" style="top: 40px; bottom: 0px;">
+		<iframe id="innerWrap" width="100%" height="100%" frameborder="no" style="position:absolute;" src="./미리보기_files/saved_resource.html" title="content" allowtransparency="true">
+		</iframe>
+		<div class="exitscreen fullScreenOnly">
+			<a id="exitFullScreenBtn" href="http://gw.nconnect.co.kr/resources/synap/skin/doc.html?fn=AFB4B102DA194BC1A1FCEF58FCCC7B51&amp;rs=/api/preview/rs/AFB4B102DA194BC1A1FCEF58FCCC7B51#" title="전체화면닫기" tabindex="3">
+				<img src="./미리보기_files/btn_fullscreen_close.png" alt="전체화면닫기" title="전체화면닫기" class="mouseOut">
+			</a>
+		</div>
+	</div>
+	<!-- Body END -->
+</div></body></html>

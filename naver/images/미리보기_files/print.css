@@ -1,0 +1,8 @@
+@charset "utf-8";
+/* User define */
+#headerWrap {
+	display:none;
+}
+@page{
+margin:0.5cm;
+}

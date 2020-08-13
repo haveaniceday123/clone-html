@@ -24,3 +24,25 @@ function getCookieMobile() {
     $(".pop-up-wrapper").hide();
   }
 }
+
+// auto compelete on / off function
+var autoCompelete = false;
+
+$(document).ready(function() {
+  $(".down-arrow").click(function(){
+    event.preventDefault();
+    event.stopPropagation();
+    console.log(1);
+    autoCompelete = !autoCompelete;
+    console.log(autoCompelete);
+    if (autoCompelete) {
+      $(".down-arrow").addClass('reverse');
+      $(".auto-input-wrapper").css('display', 'block');
+    } else {
+      $(".down-arrow").removeClass('reverse');
+      $(".auto-input-wrapper").css('display', 'none');
+    }
+  });
+});
+
+

@@ -1,10 +1,10 @@
 @charset "utf-8";
-@import url('https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
 
 /* CSS Reset */
 body, html {
   height: 100%;
-  font-family: 'Gothic A1', sans-serif;
+  font-family: 'Nanum Gothic', sans-serif;
 }
 
 body, p, div, button {
@@ -34,6 +34,8 @@ a {
 .float-left { float: left; }
 
 .float-right { float: right; }
+
+.color-green { color: var(--naver-green-color)}
 
 /* CSS Design */
 .pop-up-wrapper {
@@ -197,19 +199,20 @@ a {
   cursor: pointer;
 }
 
-.search-form > div.keyboard-hover-speech-bubble {
+.search-form > i.speech-bubble {
   display: none;
   position: absolute;
-  width: 53px;
-  height: 29px;
-  background: var(--naver-green-color);
-  text-align: center;
-  color: white;
+  width: 51px;
+  height: 37px;
   border-radius: 5px;
   font-size: 11px;
   vertical-align: middle;
+  z-index: 999;
+  background-size: 452px 428px;
+  background-position: -155px -112px;
+  background-image: url(images/naver-main-sprite.png);
+
   right: 70px;
-  line-height: 29px;
   top: 40px;
   padding: 0 6px;
 }
@@ -219,7 +222,7 @@ a {
   background-position: -64px -373px;
 }
 
-.search-form > i.keyboard-icon:hover + div.keyboard-hover-speech-bubble {
+.search-form > i.keyboard-icon:hover + i.speech-bubble {
   display: inline-block;
   z-index: 2;
 }
@@ -231,38 +234,61 @@ a {
   background-image: url(images/naver-main-sprite.png);
   background-position: -436px -365px;
   background-size: 482px 412px;
+  cursor: pointer;
+}
+
+.search-form > i.down-arrow.reverse {
+  background-image: url(images/naver-main-sprite.png);
+  background-position: -367px -286px;
+  background-size: 482px 412px;
 }
 
 .auto-input-wrapper {
-  width: 525px;
+  width: 581px;
   position: absolute;
   z-index: 1;
-  top: 54px;
+  top: 52px;
   background-color: white;
   left: -2px;
   border: 1px solid #e2dddd;
+  display: none;
 }
 
 .auto-input-wrapper > .auto-input-words {
   display: inline-block;
-  font-size: 14px;
-  padding: 20px 15px;
+  font-size: 12px;
+  padding: 11px 10px;
   vertical-align: middle;
 }
 
 .auto-input-wrapper > .auto-input-function-wrapper {
-  padding: 5px 15px;
-  font-size: 12px;
+  padding: 0px 10px;
+  font-size: 11px;
+  background: #8e88880d;
+  border-top: 1px solid #80808014;
 }
 
 .auto-input-wrapper > .auto-input-function-wrapper > section > div {
   padding: 0px 4px;
+  cursor: pointer;
+}
+
+.auto-input-wrapper > .auto-input-function-wrapper > section > div:hover {
+  text-decoration: underline;
 }
 
 .auto-input-wrapper > .auto-input-function-wrapper > section > div.devider {
   padding: 0;
   width: 0;
-  border-right: 1px solid black;
-  height: 10px;
-  margin: 8px 5px 0px;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  height: 13px;
+  margin: 9px 5px;
+}
+
+.auto-complete-switch {
+  cursor: pointer;
+}
+
+.auto-complete-switch:hover {
+  text-decoration: underline;
 }

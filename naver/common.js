@@ -1,3 +1,6 @@
+// All code and comments were written by Jinyong Park.
+// it turns out that this is for learning purposes only and not commercial
+
 $(document).ready(function() {
   getCookieMobile();
   $(".pop-up-close-button").click(function() {
@@ -7,7 +10,6 @@ $(document).ready(function() {
     $(".pop-up-wrapper").hide();
   })
 });
-
 
 function setCookieMobile( name, value, expiredays) {
   var todayDate = new Date();
@@ -28,21 +30,38 @@ function getCookieMobile() {
 // auto compelete on / off function
 var autoCompelete = false;
 
-$(document).ready(function() {
-  $(".down-arrow").click(function(){
-    event.preventDefault();
-    event.stopPropagation();
-    console.log(1);
-    autoCompelete = !autoCompelete;
-    console.log(autoCompelete);
-    if (autoCompelete) {
-      $(".down-arrow").addClass('reverse');
-      $(".auto-input-wrapper").css('display', 'block');
-    } else {
-      $(".down-arrow").removeClass('reverse');
-      $(".auto-input-wrapper").css('display', 'none');
-    }
-  });
+//is this @param's area?
+$('html').click(function(e) {
+  if (!$(e.target).closest(".search-form")[0]) showOffAutoComplete()
 });
+
+//when #main-input key-down event
+//if #main-input value is not empty, show auto Complete
+//if not, not show auto Complete
+$('#main-input').keyup(function(e) {
+  if ($("#main-input").val() !== "") showAutoComplete();
+  else showOffAutoComplete();
+})
+
+//show auto-complete
+function showAutoComplete() {
+  autoCompelete = true;
+  $(".down-arrow").addClass('reverse');
+  $(".auto-input-wrapper").css('display', 'block');
+}
+
+function showOffAutoComplete() {
+  autoCompelete = false;
+  $(".down-arrow").removeClass('reverse');
+  $(".auto-input-wrapper").css('display', 'none');
+}
+
+$(".down-arrow").click(function(){
+  showAutoComplete();
+});
+
+$(".reverse").click(function(){
+  showOffAutoComplete();
+})
 
 

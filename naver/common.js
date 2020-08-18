@@ -10,7 +10,7 @@
  * when all the documents are ready, decide whether to show the 
  * banner or not.
  */
-$(window).ready(function () {
+$(document).ready(function () {
   var autoCompelete = $('.pop-up-wrapper');
   if (getCookie(popUpCookieName)) {
     autoCompelete.hide();
@@ -19,10 +19,6 @@ $(window).ready(function () {
     autoCompelete.show();
   }
 });
-
-$(window).onload(function() {
-  alert("hi");
-})
 
 /**
  * when button click, "not showing 3 days" event
@@ -39,7 +35,7 @@ $('.pop-up-close-button').click(function(event) {
  */
 $('#main-input').keydown(function(event) {
   if (event.keyCode === 13) {
-    console.log(event);
+    console.log('enter inputed');
   }
 })
 

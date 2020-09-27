@@ -7,7 +7,11 @@ body, html {
   font-family: 'Nanum Gothic', sans-serif;
 }
 
-body, p, div, button {
+ul, li {
+  list-style: none;
+}
+
+body, p, div, button, ul, li {
   padding: 0;
   margin: 0;
 }
@@ -21,12 +25,17 @@ a {
 :root {
   --reference-width: 1130px;
   --naver-green-color: #19ce60;
+  --background-gray: #8e88880d;
 }
 
 .sprite-image {
   display: inline-block;
   background-repeat: no-repeat;
   vertical-align: middle;
+}
+
+.green {
+  color: var(--naver-green-color);
 }
 
 .clear { clear: both; }
@@ -257,7 +266,7 @@ a {
 .auto-input-wrapper > .auto-input-words {
   display: inline-block;
   font-size: 12px;
-  padding: 11px 10px;
+  padding: 0px 10px;
   vertical-align: middle;
 }
 
@@ -292,3 +301,10 @@ a {
 .auto-complete-switch:hover {
   text-decoration: underline;
 }
+
+ul.auto-input-contents {
+
+}
+
+
+

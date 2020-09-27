@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>rtsp-stream</title>
+  <script src="jsmpeg.min.js"></script>
+</head>
+
+<body>
+  <div>
+    <div class="jsmpeg" data-url="ws://localhost:9999" id="video"></div>
+    <canvas id="videos"></canvas>
+    <button class="stop">Stop</button>
+    <button class="start">Start</button>
+  </div>
+</body>
+<script>
+  // var client = new WebSocket('ws://localhost:9999');
+  var canvas12 = document.querySelector('#videos');
+  var stop = document.querySelector('.stop');
+  var start = document.querySelector('.start');
+  var player = new JSMpeg.Player('ws://localhost:9999', {
+    autoplay: false,  onVideoDecode: (a, b) => {
+      console.log(a, b)
+    },
+    onSourceEstablished: (source) => {
+      console.log(source);
+      player.stop();
+    }
+  });
+
+
+  stop.addEventListener("click", () => {
+    console.log('stop');
+    console.log(player.stop());
+  });
+
+  start.addEventListener("click", () => {
+    console.log('start');
+    console.log(player.play());
+  })
+
+  canvas12.style.width = '427px';
+  canvas12.style.height = '240px';
+  console.log(player);
+</script>
+<!-- </html> -->
